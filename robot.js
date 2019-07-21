@@ -16,8 +16,16 @@ function availablePosition(newPosition, mapSize) {
 
 function move(newPosition) {
     if (availablePosition(newPosition, state.mapSize)) {
-        histories.push(state);
+        histories.push({...state});
+
         state.robotPosition = newPosition;
+        // histories elements:  position > 2   [{robotPosition: 3, mapSize: 5}, {robotPosition: 4, mapSize: 5}]
+        let filterList = histories.filter(aState => aState.robotPosition > 1);
+        console.log('filter: ', filterList);
+        // histories: robotPosition only   [2, 3, 4]
+        console.log('map: ' + histories.map(aState => aState.robotPosition))
+        // combine all the icons  'RRRRRR'
+        console.log('reduce ' + histories.reduce((total, aState) => total + aState.icon, ''));
         render();
         return true;
     } else {
